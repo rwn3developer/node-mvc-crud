@@ -115,7 +115,28 @@ const update = (req,res) =>{
         })
     }
     else{
-
+        let avatar = "";
+        Admintbl.findById(id,(err,data)=>{
+            if(err){
+                console.log("Record no fetch");
+                return false;
+            }
+             
+            avatar = data.avatar;
+            Admintbl.findByIdAndUpdate(id,{
+                name : req.body.name,
+                email : req.body.email,
+                password : req.body.password,
+                avatar : avatar
+            },(err,re)=>{
+                if(err){
+                    console.log("Record not update");
+                    return false;
+                }
+                console.log("Record successfully update");
+                return res.redirect('/view');
+            })
+        })  
     }
    
 }
